@@ -1,4 +1,5 @@
 import React from 'react';
+import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 
 function GuessInput ({ guessList, setGuessList }) {
   const [guessInput, setGuessInput] = React.useState("");
@@ -10,15 +11,17 @@ function GuessInput ({ guessList, setGuessList }) {
   function onSubmit (event) {
     event.preventDefault();
 
-    const nextGuessList = [...guessList];
-    setGuessList([...nextGuessList, guessInput]);
+    if (guessList.length !== NUM_OF_GUESSES_ALLOWED) {
+      const nextGuessList = [...guessList];
+      setGuessList([...nextGuessList, guessInput]);
 
-    setGuessInput("");
+      setGuessInput("");
+    }
   }
 
   return <form className="guess-input-wrapper" onSubmit={ onSubmit }>
     <label htmlFor="guess-input">Enter guess:</label>
-    <input id="guess-input" type="text" value={ guessInput } onChange={ guessOnChange } pattern="[A-Z]{5}" maxLength={ 5 } />
+    <input id="guess-input" type="text" value={ guessInput } onChange={ guessOnChange } pattern="[a-zA-Z]{5}" maxLength={ 5 } />
   </form>;
 }
 
